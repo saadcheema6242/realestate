@@ -1,0 +1,25 @@
+{
+    "name": "real-estate-ai-demo",
+    "version": "1.0.0",
+    "description": "Demo real estate AI system with website, chatbot, and admin dashboard",
+    "main": "server/index.js",
+    "scripts": {
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "server": "cd server && npm run dev",
+        "client": "cd client && npm start",
+        "build": "cd client && npm run build",
+        "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+    },
+    "keywords": [
+        "real-estate",
+        "ai",
+        "chatbot",
+        "react",
+        "node"
+    ],
+    "author": "Real Estate AI Demo",
+    "license": "MIT",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
