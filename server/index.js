@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 5000;
 const JWT_SECRET = 'your-secret-key-change-in-production';
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://your-vercel-app.vercel.app'] // Replace with your actual Vercel URL
+    : ['http://localhost:3000'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -229,7 +234,10 @@ app.post('/api/upload-images', authenticateToken, upload.array('images', 10), (r
     }
 
     const imageUrls = req.files.map(file => {
-      return `http://localhost:5000/uploads/${file.filename}`;
+      const baseUrl = process.env.NODE_ENV === 'production'
+        ? process.env.BASE_URL || `https://${req.get('host')}`
+        : 'http://localhost:5000';
+      return `${baseUrl}/uploads/${file.filename}`;
     });
 
     res.json({
